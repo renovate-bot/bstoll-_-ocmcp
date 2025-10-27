@@ -16,7 +16,7 @@ import (
 
 var (
 	httpAddr = flag.String("http_address", "", "If set, listen on this address for HTTP requests instead of stdin/stdout.")
-	yangDirs = flag.String("yang_dirs", "public/release/models,public/third_party/ietf", "Comma separated list of YANG directories to recursively load.")
+	yangDirs = flag.String("yang_dirs", "openconfig_public/release/models,openconfig_public/third_party/ietf", "Comma separated list of YANG directories to recursively load.")
 )
 
 func main() {

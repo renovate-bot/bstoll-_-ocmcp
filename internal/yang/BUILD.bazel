@@ -1,0 +1,17 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "yang",
+    srcs = [
+        "model.go",
+        "yang.go",
+    ],
+    importpath = "github.com/bstoll/ocmcp/internal/yang",
+    visibility = ["//:__subpackages__"],
+    deps = [
+        "@com_github_mattn_go_sqlite3//:go-sqlite3",
+        "@com_github_modelcontextprotocol_go_sdk//mcp",
+        "@com_github_openconfig_goyang//pkg/yang",
+        "@io_bazel_rules_go//go/runfiles",
+    ],
+)

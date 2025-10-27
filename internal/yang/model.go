@@ -5,10 +5,11 @@ import (
 	"errors"
 	"fmt"
 	"io/fs"
-	"path/filepath"
+	"os"
 	"sort"
 	"strings"
 
+	"github.com/bazelbuild/rules_go/go/runfiles"
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/openconfig/goyang/pkg/yang"
 )
@@ -145,18 +146,32 @@ func initDB(infos []pathInfo) (*sql.DB, error) {
 	return db, nil
 }
 
-func filePaths(dirPaths []string) (srcFiles []string, err error) {
+func filePaths(dirPaths []string) ([]string, error) {
+	var r fs.FS
+	var srcFiles []string
+	r, err := runfiles.New()
+	if err != nil {
+		r = os.DirFS(".")
+	}
+
 	for _, dirPath := range dirPaths {
-		err = filepath.Walk(dirPath, func(path string, f fs.FileInfo, err error) error {
+		err := fs.WalkDir(r, dirPath, func(path string, d fs.DirEntry, err error) error {
 			if err != nil {
 				return err
 			}
-			if !f.IsDir() && strings.HasSuffix(f.Name(), ".yang") {
-				srcFiles = append(srcFiles, path)
+			if !d.IsDir() && strings.HasSuffix(d.Name(), ".yang") {
+				realPath, err := runfiles.Rlocation(path)
+				if err != nil {
+					srcFiles = append(srcFiles, path)
+				} else {
+					srcFiles = append(srcFiles, realPath)
+				}
 			}
 			return nil
 		})
+		if err != nil {
+			return nil, err
+		}
 	}
-
-	return srcFiles, err
+	return srcFiles, nil
 }
