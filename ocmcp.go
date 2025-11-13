@@ -43,8 +43,8 @@ func main() {
 		}, nil)
 		log.Infof("Listening on address %q", *httpAddr)
 		s := &http.Server{
-			Addr:    *httpAddr,
-			Handler: handler,
+			Addr:         *httpAddr,
+			Handler:      handler,
 			ReadTimeout:  10 * time.Second,
 			WriteTimeout: 10 * time.Second,
 		}

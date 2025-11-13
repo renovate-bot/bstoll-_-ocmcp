@@ -72,7 +72,7 @@ func (y *ModelIndex) RegisterTools(server *mcp.Server) error {
 	return nil
 }
 
-func (y *ModelIndex) searchModel(_ context.Context, req *mcp.CallToolRequest, input searchRequest) (*mcp.CallToolResult, searchResponse, error) {
+func (y *ModelIndex) searchModel(_ context.Context, _ *mcp.CallToolRequest, input searchRequest) (*mcp.CallToolResult, searchResponse, error) {
 	stmt, err := y.db.Prepare("SELECT path, description, type FROM path_index WHERE path_index MATCH ? ORDER BY rank LIMIT 100")
 	if err != nil {
 		return nil, searchResponse{}, fmt.Errorf("failed to prepare statement: %w", err)
