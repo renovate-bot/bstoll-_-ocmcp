@@ -1,5 +1,9 @@
 # ocmcp
 
+[![License: Apache](https://img.shields.io/badge/license-Apache%202-blue)](https://opensource.org/licenses/Apache-2.0)
+[![Lint Status](https://github.com/bstoll/ocmcp/workflows/Lint%20Code%20Base/badge.svg)](https://github.com/bstoll/ocmcp/actions/workflows/lint.yml?query=branch%3Amain)
+[![Bazel Status](https://github.com/bstoll/ocmcp/workflows/bazel%20build/badge.svg)](https://github.com/bstoll/ocmcp/actions/workflows/bazel.yml?query=branch%3Amain)
+
 ## Quick Start
 
 You will need [Docker](https://docs.docker.com/get-docker/) installed to run the pre-built image.
@@ -37,17 +41,20 @@ ocmcp uses Bazel for builds. We recommend using [Bazelisk](https://github.com/ba
 #### Install Bazelisk
 
 **macOS** (via [Homebrew](https://brew.sh/))
+
 ```bash
 brew install bazelisk
 ```
 
 **Linux**
+
 ```bash
 sudo curl -L https://github.com/bazelbuild/bazelisk/releases/latest/download/bazelisk-linux-amd64 -o /usr/local/bin/bazel
 sudo chmod +x /usr/local/bin/bazel
 ```
 
 **NPM (Any OS)**
+
 ```bash
 npm install -g @bazel/bazelisk
 ```
@@ -98,11 +105,11 @@ docker run --rm -it ocmcp:latest
 
 To publish the image to GitHub Container Registry (GHCR):
 
-1.  Login to GHCR:
-    ```bash
-    docker login ghcr.io
-    ```
-2.  Push the image:
-    ```bash
-    bazel run //:push
-    ```
+1. Login to GHCR:
+   ```bash
+   docker login ghcr.io
+   ```
+2. Push the image:
+   ```bash
+   bazel run //:push
+   ```
