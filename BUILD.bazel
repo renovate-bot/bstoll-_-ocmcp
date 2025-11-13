@@ -1,5 +1,7 @@
 load("@bazel_gazelle//:def.bzl", "gazelle", "gazelle_test")
 load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+load("@rules_oci//oci:defs.bzl", "oci_image", "oci_load", "oci_push")
+load("@rules_pkg//:pkg.bzl", "pkg_tar")
 
 gazelle(name = "gazelle")
 
@@ -25,4 +27,41 @@ go_binary(
     data = ["@openconfig_public//:all"],
     embed = [":ocmcp_lib"],
     visibility = ["//visibility:public"],
+)
+
+pkg_tar(
+    name = "ocmcp_layer",
+    srcs = [":ocmcp"],
+    package_dir = "/usr/local/bin",
+)
+
+pkg_tar(
+    name = "openconfig_layer",
+    srcs = ["@openconfig_public//:all"],
+    package_dir = "/app/openconfig_public",
+    strip_prefix = "external/+_repo_rules+openconfig_public",
+)
+
+oci_image(
+    name = "image",
+    base = "@distroless_cc",
+    entrypoint = ["/usr/local/bin/ocmcp"],
+    tars = [
+        ":ocmcp_layer",
+        ":openconfig_layer",
+    ],
+    workdir = "/app",
+)
+
+oci_load(
+    name = "image_tarball",
+    image = ":image",
+    repo_tags = ["ocmcp:latest"],
+)
+
+oci_push(
+    name = "push",
+    image = ":image",
+    remote_tags = ["latest"],
+    repository = "ghcr.io/bstoll/ocmcp",
 )

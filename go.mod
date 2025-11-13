@@ -3,7 +3,7 @@ module github.com/bstoll/ocmcp
 go 1.24.4
 
 require (
-	github.com/bazelbuild/rules_go v0.58.2
+	github.com/bazelbuild/rules_go v0.59.0
 	github.com/golang/glog v1.2.5
 	github.com/mattn/go-sqlite3 v1.14.32
 	github.com/modelcontextprotocol/go-sdk v1.0.0
