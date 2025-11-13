@@ -1,8 +1,8 @@
 # ocmcp
 
 [![License: Apache](https://img.shields.io/badge/license-Apache%202-blue)](https://opensource.org/licenses/Apache-2.0)
-[![Lint Status](https://github.com/bstoll/ocmcp/workflows/Lint%20Code%20Base/badge.svg)](https://github.com/bstoll/ocmcp/actions/workflows/lint.yml?query=branch%3Amain)
-[![Bazel Status](https://github.com/bstoll/ocmcp/workflows/bazel%20build/badge.svg)](https://github.com/bstoll/ocmcp/actions/workflows/bazel.yml?query=branch%3Amain)
+[![Lint Code Base](https://github.com/bstoll/ocmcp/actions/workflows/lint.yml/badge.svg?branch=main)](https://github.com/bstoll/ocmcp/actions/workflows/lint.yml)
+[![bazel build](https://github.com/bstoll/ocmcp/actions/workflows/bazel.yml/badge.svg?branch=main)](https://github.com/bstoll/ocmcp/actions/workflows/bazel.yml)
 
 ## Quick Start
 
