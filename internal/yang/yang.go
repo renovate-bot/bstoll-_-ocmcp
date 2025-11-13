@@ -7,12 +7,13 @@ import (
 	"fmt"
 	"strings"
 
-	_ "github.com/mattn/go-sqlite3"
 	"github.com/modelcontextprotocol/go-sdk/mcp"
+
+	_ "github.com/mattn/go-sqlite3" // sqlite3 driver for database/sql
 )
 
-// YangModelIndex provides YANG model MCP server tools.
-type YangModelIndex struct {
+// ModelIndex provides YANG model MCP server tools.
+type ModelIndex struct {
 	SrcDirs []string
 
 	db *sql.DB
@@ -34,7 +35,7 @@ type searchResult struct {
 
 // loadYangModels processes YANG models from disk and loads them into a sqlite
 // database.
-func (y *YangModelIndex) loadYangModels() error {
+func (y *ModelIndex) loadYangModels() error {
 	srcFiles, err := filePaths(y.SrcDirs)
 	if err != nil {
 		return err
@@ -59,7 +60,7 @@ func (y *YangModelIndex) loadYangModels() error {
 }
 
 // RegisterTools adds the YangModelIndex tools to the provided MCP server.
-func (y *YangModelIndex) RegisterTools(server *mcp.Server) error {
+func (y *ModelIndex) RegisterTools(server *mcp.Server) error {
 	if err := y.loadYangModels(); err != nil {
 		return err
 	}
@@ -71,7 +72,7 @@ func (y *YangModelIndex) RegisterTools(server *mcp.Server) error {
 	return nil
 }
 
-func (y *YangModelIndex) searchModel(ctx context.Context, req *mcp.CallToolRequest, input searchRequest) (*mcp.CallToolResult, searchResponse, error) {
+func (y *ModelIndex) searchModel(_ context.Context, _ *mcp.CallToolRequest, input searchRequest) (*mcp.CallToolResult, searchResponse, error) {
 	stmt, err := y.db.Prepare("SELECT path, description, type FROM path_index WHERE path_index MATCH ? ORDER BY rank LIMIT 100")
 	if err != nil {
 		return nil, searchResponse{}, fmt.Errorf("failed to prepare statement: %w", err)

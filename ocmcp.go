@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"os"
 	"strings"
+	"time"
 
 	"github.com/bstoll/ocmcp/internal/yang"
 	log "github.com/golang/glog"
@@ -27,7 +28,7 @@ func main() {
 		log.Errorf("No YANG dirs provided.")
 		os.Exit(1)
 	}
-	yangIndex := yang.YangModelIndex{
+	yangIndex := yang.ModelIndex{
 		SrcDirs: strings.Split(*yangDirs, ","),
 	}
 	err := yangIndex.RegisterTools(server)
@@ -41,7 +42,13 @@ func main() {
 			return server
 		}, nil)
 		log.Infof("Listening on address %q", *httpAddr)
-		if err := http.ListenAndServe(*httpAddr, handler); err != nil {
+		s := &http.Server{
+			Addr:         *httpAddr,
+			Handler:      handler,
+			ReadTimeout:  10 * time.Second,
+			WriteTimeout: 10 * time.Second,
+		}
+		if err := s.ListenAndServe(); err != nil {
 			log.Errorf("Server failed: %v", err)
 			os.Exit(1)
 		}
