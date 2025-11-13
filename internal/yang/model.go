@@ -10,8 +10,9 @@ import (
 	"strings"
 
 	"github.com/bazelbuild/rules_go/go/runfiles"
-	_ "github.com/mattn/go-sqlite3"
 	"github.com/openconfig/goyang/pkg/yang"
+
+	_ "github.com/mattn/go-sqlite3" // sqlite3 driver for database/sql
 )
 
 // pathInfo stores the data for each discovered schema path
