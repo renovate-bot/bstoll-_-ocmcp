@@ -3,9 +3,9 @@ module github.com/bstoll/ocmcp
 go 1.25.0
 
 require (
-	github.com/bazelbuild/rules_go v0.59.0
+	github.com/bazelbuild/rules_go v0.60.0
 	github.com/golang/glog v1.2.5
-	github.com/mattn/go-sqlite3 v1.14.32
+	github.com/mattn/go-sqlite3 v1.14.37
 	github.com/modelcontextprotocol/go-sdk v1.4.1
 	github.com/openconfig/goyang v1.6.3
 )

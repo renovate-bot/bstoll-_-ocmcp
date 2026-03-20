@@ -4,12 +4,12 @@ module(
 )
 
 bazel_dep(name = "gazelle", version = "0.47.0", repo_name = "bazel_gazelle")
-bazel_dep(name = "rules_go", version = "0.59.0", repo_name = "io_bazel_rules_go")
-bazel_dep(name = "rules_oci", version = "2.2.6")
-bazel_dep(name = "rules_pkg", version = "1.1.0")
+bazel_dep(name = "rules_go", version = "0.60.0", repo_name = "io_bazel_rules_go")
+bazel_dep(name = "rules_oci", version = "2.3.0")
+bazel_dep(name = "rules_pkg", version = "1.2.0")
 
 go_sdk = use_extension("@io_bazel_rules_go//go:extensions.bzl", "go_sdk")
-go_sdk.download(version = "1.25.4")
+go_sdk.download(version = "1.26.1")
 
 go_deps = use_extension("@bazel_gazelle//:extensions.bzl", "go_deps")
 go_deps.from_file(go_mod = "//:go.mod")
@@ -43,7 +43,7 @@ filegroup(
 oci = use_extension("@rules_oci//oci:extensions.bzl", "oci")
 oci.pull(
     name = "distroless_cc",
-    digest = "sha256:0000f9dc0290f8eaf0ecceafbc35e803649087ea7879570fbc78372df7ac649b",
+    digest = "sha256:329e54034ce498f9c6b345044e8f530c6691f99e94a92446f68c0adf9baa8464",
     image = "gcr.io/distroless/cc-debian12",
     platforms = [
         "linux/amd64",
